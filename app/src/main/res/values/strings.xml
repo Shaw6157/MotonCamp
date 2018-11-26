@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">AMotorNCamp</string>
+    <string name="splash_slogan">Find your Motorhomes and Campsites!</string>
+
+    <string name="clist_title">Campsite List</string>
+    <string name="navigation_drawer_open">Open ...</string>
+    <string name="navigation_drawer_close">Close ...</string>
+    <string name="nav_header_title">Shaw</string>
+    <string name="nav_header_subtitle">shawyunz@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="vdetail_tab1">Info</string>
+    <string name="vdetail_tab2">Other</string>
+    <string name="title_activity_campsite_map">Campsite Map</string>
+
+
+</resources>

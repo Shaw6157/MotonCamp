@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_campsite"
+            android:icon="@drawable/nav_nature"
+            android:title="Campsite" />
+        <item
+            android:id="@+id/nav_vehicle"
+            android:icon="@drawable/nav_vehicle"
+            android:title="Motorhome" />
+        <item
+            android:id="@+id/nav_cp_map"
+            android:icon="@drawable/nav_cp_map"
+            android:title="Nearby Campsites" />
+        <item
+            android:id="@+id/nav_order"
+            android:icon="@drawable/nav_order"
+            android:title="My Order" />
+    </group>
+
+    <item android:title="App">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/nav_about"
+                android:title="About" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/nav_exit"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>

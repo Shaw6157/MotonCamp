@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:background="@drawable/bg_green"
+    tools:context=".view.campsite.CsDetailActivity"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:background="@color/colorBg">
+
+        <ImageView
+            android:id="@+id/csdt_img_title"
+            android:layout_width="104dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/vlst_tv_name"
+            app:srcCompat="@drawable/splash_logo" />
+
+        <TextView
+            android:id="@+id/csdt_tv_name"
+            android:layout_width="208dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="Lucky Rookie"
+            android:linksClickable="true"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/csdt_tv_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="serif"
+            android:text="visit HomePage"
+            android:autoLink="web"
+            android:textAppearance="@style/TextAppearance.Design.Hint"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorBg"
+        android:columnCount="2">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Address:" />
+
+        <TextView
+            android:id="@+id/csdt_tv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:maxLines="2"
+            android:text="Auckland campsites, Linwood Avenue1 Linwood Avenue2 Linwood Avenue3 Linwood Avenue " />
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center_vertical"
+            android:text="Phone:" />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            >
+
+            <TextView
+                android:id="@+id/csdt_tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0211327731"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/csdt_btn_phone"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="70dp"
+                android:autoLink="phone"
+                android:background="@drawable/ic_phone_dark" />
+
+            <Button
+                android:id="@+id/csdt_btn_message"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ic_phone_message_dark" />
+        </LinearLayout>
+
+    </GridLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorBg"
+        android:columnCount="2">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Features:" />
+
+        <TextView
+            android:id="@+id/csdt_tv_features"
+            android:layout_width="222dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="Features listed" />
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="Introduction:"
+            android:layout_gravity="top"
+            />
+
+        <TextView
+            android:id="@+id/csdt_tv_info"
+            android:layout_width="222dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="top"
+            android:text="Brief introduction Brief introduction Brief introduction"
+            android:textSize="12sp" />
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:background="@color/colorBg"
+        >
+
+        <ImageView
+            android:id="@+id/csdt_photo1"
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
+            />
+
+        <ImageView
+            android:id="@+id/csdt_photo2"
+            android:layout_width="120dp"
+            android:layout_height="140dp"
+            android:layout_margin="8dp"
+            />
+
+        <Button
+            android:id="@+id/csdt_btn_more"
+            android:layout_width="40dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="8dp"
+            android:background="@color/colorBgBtn"
+            android:fontFamily="sans-serif-condensed"
+            android:text="More  ..."
+            android:textAllCaps="false"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
