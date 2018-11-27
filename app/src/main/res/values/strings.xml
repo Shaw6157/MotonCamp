@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AMotorNCamp</string>
+    <string name="app_name">MotornCamp</string>
     <string name="splash_slogan">Find your Motorhomes and Campsites!</string>
 
     <string name="clist_title">Campsite List</string>

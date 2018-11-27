@@ -9,7 +9,7 @@ import com.ais.mnc.R;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.campsite.CsListActivity;
 
-public class MncAboutActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     Button btn_back;
 
@@ -22,7 +22,7 @@ public class MncAboutActivity extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MncUtilities.startNextActivity(MncAboutActivity.this, CsListActivity.class, true);
+                MncUtilities.startNextActivity(AboutActivity.this, CsListActivity.class, true);
             }
         });
     }

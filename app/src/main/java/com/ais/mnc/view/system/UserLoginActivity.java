@@ -67,7 +67,7 @@ public class UserLoginActivity extends AppCompatActivity{
                 UserBean[] users = new UserBean[1];
                 users[0] = user;
 
-                new UserTask("signin").execute(user);
+                new UserTask("signin", UserLoginActivity.this, checkBox).execute(user);
 
 //                if (mUserDao.checkExist("", "")) {
 //                    if (lv_pwd.equals(mUserDao.getPassword(lv_name))) {

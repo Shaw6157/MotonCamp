@@ -38,7 +38,7 @@ import java.util.Locale;
  */
 public class MncUtilities {
     private static final String TAG = "MncUtilities >>> ";
-    private static final String SERVER_ENC = "UTF-8";
+//    private static final String SERVER_ENC = "UTF-8";
 
     public static UserBean currentUser = null;
     public static CampBean currentCpsite = null;
@@ -142,9 +142,9 @@ public class MncUtilities {
         return (str == null) || (str.length() < 1);
     }
 
-    public static String encodeUTF8 (String str) {
+    public static String encodeUTF8(String str) {
         try {
-            return URLEncoder.encode(str, SERVER_ENC);
+            return URLEncoder.encode(str, ConfServer.SERVER_ENC);
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "encoding error:" + e.getMessage());
         }

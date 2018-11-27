@@ -21,20 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ais.mnc.R;
-import com.ais.mnc.db.bean.CampBean;
-import com.ais.mnc.db.dao.CampsiteDao;
 import com.ais.mnc.db.daoimp.CampsiteDaoImp;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.adapter.CampsiteListAdapter;
 import com.ais.mnc.view.motorhome.OrderListActivity;
-import com.ais.mnc.view.motorhome.VehicleDetailActivity;
-import com.ais.mnc.view.motorhome.VehicleListActivity;
 import com.ais.mnc.view.motorhome.VehicleTypeActivity;
-import com.ais.mnc.view.system.MncAboutActivity;
+import com.ais.mnc.view.system.AboutActivity;
 import com.ais.mnc.view.system.SplashActivity;
 import com.ais.mnc.view.system.UserLoginActivity;
-
-import java.util.ArrayList;
 
 public class CsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -171,7 +165,7 @@ public class CsListActivity extends AppCompatActivity
                 MncUtilities.startNextActivity(this, UserLoginActivity.class, false);
             }
         } else if (id == R.id.nav_about) {
-            MncUtilities.startNextActivity(this, MncAboutActivity.class, false);
+            MncUtilities.startNextActivity(this, AboutActivity.class, false);
         } else if (id == R.id.nav_logout) {
             if (MncUtilities.currentUser == null) {
                 MncUtilities.toastMessage(this, "Haven't logged in yet!");
