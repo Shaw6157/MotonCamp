@@ -151,5 +151,14 @@ public class MncUtilities {
         return "er";
     }
 
+    public static String encodeUTF8(int int_str) {
+        try {
+            return URLEncoder.encode(String.valueOf(int_str), ConfServer.SERVER_ENC);
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "encoding error:" + e.getMessage());
+        }
+        return "er";
+    }
+
 
 }

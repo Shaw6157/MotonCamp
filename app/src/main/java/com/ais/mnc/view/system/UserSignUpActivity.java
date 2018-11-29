@@ -15,6 +15,7 @@ import com.ais.mnc.R;
 import com.ais.mnc.db.bean.UserBean;
 import com.ais.mnc.db.dao.UserDao;
 import com.ais.mnc.db.daoimp.UserDaoImp;
+import com.ais.mnc.db.phpimp.UserTask;
 import com.ais.mnc.util.MncUtilities;
 
 public class UserSignUpActivity extends AppCompatActivity{
@@ -48,10 +49,9 @@ public class UserSignUpActivity extends AppCompatActivity{
         signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
-                String uname = name.getText().toString();
-                String uemail = email.getText().toString();
-                String upwd = password.getText().toString();
+                String uname = name.getText() + "";
+                String uemail = email.getText() + "";
+                String upwd = password.getText() + "";
 
                 //validations
                 if (!checkBox.isChecked()) {
@@ -63,31 +63,27 @@ public class UserSignUpActivity extends AppCompatActivity{
                 } else if (upwd.length() < 6) {
                     MncUtilities.toastMessage(UserSignUpActivity.this, "The length of the password should be more than 5 !");
                     return;
-//                } else if (true) {
-//
-//                    return;
                 } else {
 
                 }
 
-                signup_user = new UserBean(
-                        1,  //not necessary to fill, as the column is auto-increment
-                        uname,
-                        uemail,
-                        upwd
-                );
-                if (!mUserDao.checkExist(signup_user.getUname(), signup_user.getEmail())) {
-                    if (mUserDao.createUser(signup_user)) {
-                        Log.d(TAG, "created  user === " + signup_user.getUname());
-                        MncUtilities.toastMessage(UserSignUpActivity.this, "Sign up Successfully!");
-                        MncUtilities.startNextActivity(UserSignUpActivity.this, UserLoginActivity.class, true);
-                    } else {
-                        MncUtilities.toastMessage(UserSignUpActivity.this, "Sign up error!");
-                    }
-                } else {
-                    Log.d(TAG, "exists user === " + signup_user.getUname());
-                    MncUtilities.toastMessage(UserSignUpActivity.this, "The user or email already exists ! ");
-                }
+                signup_user = new UserBean(1, uname, uemail, upwd);
+                //not necessary for user_id, as the column is auto-increment,directly put 1 here.
+
+                new UserTask("signup", UserSignUpActivity.this).execute(signup_user);
+
+//                if (!mUserDao.checkExist(signup_user.getUname(), signup_user.getEmail())) {
+//                    if (mUserDao.createUser(signup_user)) {
+//                        Log.d(TAG, "created  user === " + signup_user.getUname());
+//                        MncUtilities.toastMessage(UserSignUpActivity.this, "Sign up Successfully!");
+//                        MncUtilities.startNextActivity(UserSignUpActivity.this, UserLoginActivity.class, true);
+//                    } else {
+//                        MncUtilities.toastMessage(UserSignUpActivity.this, "Sign up error!");
+//                    }
+//                } else {
+//                    Log.d(TAG, "exists user === " + signup_user.getUname());
+//                    MncUtilities.toastMessage(UserSignUpActivity.this, "The user or email already exists ! ");
+//                }
             }
         });
 

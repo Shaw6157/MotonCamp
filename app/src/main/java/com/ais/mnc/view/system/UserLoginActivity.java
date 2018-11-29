@@ -64,8 +64,6 @@ public class UserLoginActivity extends AppCompatActivity{
                 }
 
                 UserBean user = new UserBean(1, lv_name, lv_name, lv_pwd);
-                UserBean[] users = new UserBean[1];
-                users[0] = user;
 
                 new UserTask("signin", UserLoginActivity.this, checkBox).execute(user);
 
