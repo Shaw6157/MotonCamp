@@ -17,6 +17,7 @@ import com.ais.mnc.R;
 import com.ais.mnc.db.bean.OrderBean;
 import com.ais.mnc.db.dao.OrderDao;
 import com.ais.mnc.db.daoimp.OrderDaoImp;
+import com.ais.mnc.db.phpimp.OrderTask;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.adapter.OrderAdapter;
 
@@ -26,12 +27,12 @@ import java.util.List;
 public class OrderListActivity extends AppCompatActivity {
     private static final String TAG = "OrderListActivity >>> ";
 
+    Toolbar olst_toolbar;
     RecyclerView recycle_olist;
+    BottomNavigationView odlt_btm_nav;
+
     OrderDao mOrderDao;
     List<OrderBean> orderList;
-
-    BottomNavigationView odlt_btm_nav;
-    Toolbar olst_toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,47 +51,52 @@ public class OrderListActivity extends AppCompatActivity {
         ActionBar lvActionBar = getSupportActionBar();
         lvActionBar.setDisplayHomeAsUpEnabled(true);
 
-        //achieve order list
-        mOrderDao = new OrderDaoImp(this);
-        orderList = mOrderDao.findByUID(MncUtilities.currentUser.getUid());
+        //set container
+        recycle_olist = findViewById(R.id.recycle_olist);
+        recycle_olist.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
+        recycle_olist.setHasFixedSize(true);
 
-        //bind adapter to recycle view
-        if (orderList != null) {
-            Log.d(TAG, "  oooo list got, size :  " + orderList.size());
-            recycle_olist = findViewById(R.id.recycle_olist);
-            recycle_olist.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
-            recycle_olist.setHasFixedSize(true);
-            recycle_olist.setAdapter(new OrderAdapter(this, orderList));
-            Log.d(TAG, "  oooo adapter ......");
 
-            odlt_btm_nav = findViewById(R.id.odlt_btm_nav);
-            odlt_btm_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    Log.d(TAG, " bottom menu clicked ......");
-                    if (menuItem.getItemId() == R.id.odlt_nav_booking) {
-                        filterList(orderList, "10");
-                    } else if (menuItem.getItemId() == R.id.odlt_nav_progress) {
-                        filterList(orderList, "20");
-                    } else if (menuItem.getItemId() == R.id.odlt_nav_cancel) {
-                        filterList(orderList, "90");
-                    } else {
-                        filterList(orderList, "30");
-                    }
-                    return true;
-                }
-            });
+        //fetch order list
+        //1. local version
+//        mOrderDao = new OrderDaoImp(this);
+//        orderList = mOrderDao.findByUID(MncUtilities.currentUser.getUid());
+        //2. online version
+        new OrderTask("findall", OrderListActivity.this).execute(new OrderBean());
 
-        } else {
-            MncUtilities.toastMessage(this, "No order yet!");
-        }
+//        //bind adapter to recycle view
+//        if (orderList != null) {
+//            Log.d(TAG, "  size :  " + orderList.size());
+//            recycle_olist.setAdapter(new OrderAdapter(this, orderList));
+//            Log.d(TAG, "  oooo adapter ......");
+//
+//            odlt_btm_nav = findViewById(R.id.odlt_btm_nav);
+//            odlt_btm_nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//                @Override
+//                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                    if (menuItem.getItemId() == R.id.odlt_nav_booking) {
+//                        filterList(orderList, "10");
+//                    } else if (menuItem.getItemId() == R.id.odlt_nav_progress) {
+//                        filterList(orderList, "20");
+//                    } else if (menuItem.getItemId() == R.id.odlt_nav_cancel) {
+//                        filterList(orderList, "90");
+//                    } else {
+//                        filterList(orderList, "30");
+//                    }
+//                    return true;
+//                }
+//            });
+//
+//        } else {
+//            MncUtilities.toastMessage(this, "No order yet!");
+//        }
     }
 
     private void filterList (List<OrderBean> olist, String status){
         if ("0".equals(status)) {
             return;
         } else {
-            Log.d(TAG, " filter clicked ......");
+//            Log.d(TAG, " filter clicked ......");
             ArrayList<OrderBean> returnList = new ArrayList<>();
             if (olist != null) {
                 for (OrderBean bean : olist) {
@@ -99,7 +105,7 @@ public class OrderListActivity extends AppCompatActivity {
                     }
                 }
             }
-            Log.d(TAG, " filter finished ......  : " + returnList.size());
+//            Log.d(TAG, " filter finished ......  : " + returnList.size());
             recycle_olist.setAdapter(new OrderAdapter(this, returnList));
         }
     }

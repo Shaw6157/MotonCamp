@@ -24,6 +24,7 @@ import com.ais.mnc.db.bean.VehicleBean;
 import com.ais.mnc.db.dao.OrderDao;
 import com.ais.mnc.db.dao.VehicleDao;
 import com.ais.mnc.db.daoimp.OrderDaoImp;
+import com.ais.mnc.db.phpimp.OrderTask;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.system.UserLoginActivity;
 import com.squareup.picasso.Picasso;
@@ -196,16 +197,21 @@ public class VehicleDetailActivity extends AppCompatActivity {
                             od_et_datebg.getText() + "",
                             od_et_dateed.getText() + "",
                             Integer.parseInt(od_et_amount.getText() + ""),
-                            "",  //TODO
+                            od_et_days.getText().toString(),
                             "10",
                             "" + od_et_fname.getText() + od_et_lname.getText(),
                             od_et_phone.getText() + ""
                     );
-                    mOrderDao = new OrderDaoImp(VehicleDetailActivity.this);
-                    mOrderDao.createOrder(newOrder);
 
-                    MncUtilities.toastMessage(VehicleDetailActivity.this, "Order submited!");
-                    dialog.dismiss();
+                    //1. local version
+//                    mOrderDao = new OrderDaoImp(VehicleDetailActivity.this);
+//                    mOrderDao.createOrder(newOrder);
+//                    MncUtilities.toastMessage(VehicleDetailActivity.this, "Order submited!");
+//                    dialog.dismiss();
+
+                    //2. online version
+                    new OrderTask("createorder", VehicleDetailActivity.this, dialog).execute(newOrder);
+
                 }
             }
         });
@@ -274,24 +280,6 @@ public class VehicleDetailActivity extends AppCompatActivity {
             }
         });
 
-//        od_et_datebg.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                calculateDays(c_datebg, c_dateed);
-//            }
-//        });
-
-
         od_et_dateed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -311,61 +299,6 @@ public class VehicleDetailActivity extends AppCompatActivity {
                 dlg.show();
             }
         });
-
-//        od_et_datebg.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                calculateDays(c_datebg, c_dateed);
-//            }
-//        });
-//
-//
-//        od_et_datebg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                Log.d(TAG, "onFocusChange here...    focus: " + hasFocus);
-//                if (hasFocus) {
-//                    Calendar c = Calendar.getInstance();
-//                    new DatePickerDialog(VehicleDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
-//                        @Override
-//                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                            c_datebg.set(year, month, dayOfMonth);
-//                            od_et_datebg.setText(dayOfMonth + "-" + (month + 1) +  "-" + year);
-//                        }
-//                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
-//                } else {
-//                    calculateDays(c_datebg, c_dateed);
-//                }
-//            }
-//        });
-//
-//        od_et_dateed.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                    Calendar c = Calendar.getInstance();
-//                    new DatePickerDialog(VehicleDetailActivity.this, new DatePickerDialog.OnDateSetListener() {
-//                        @Override
-//                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                            c_dateed.set(year, month, dayOfMonth);
-//                            od_et_dateed.setText(dayOfMonth + "-" + (month + 1) +  "-" + year);
-//                        }
-//                    }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();;
-//                } else {
-//                    calculateDays(c_datebg, c_dateed);
-//                }
-//            }
-//        });
     }
 
     private void calculateDays (Calendar c_bg, Calendar c_ed) {
