@@ -41,8 +41,8 @@ public class UserSignUpActivity extends AppCompatActivity{
         //init toolbar
         user_signup_toolbar = findViewById(R.id.user_signup_toolbar);
         setSupportActionBar(user_signup_toolbar);
-        ActionBar lvActionBar = getSupportActionBar();
-        lvActionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         mUserDao = new UserDaoImp(this);
 
@@ -111,5 +111,11 @@ public class UserSignUpActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

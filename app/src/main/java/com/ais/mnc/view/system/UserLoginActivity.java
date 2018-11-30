@@ -47,8 +47,8 @@ public class UserLoginActivity extends AppCompatActivity{
         //init toolbar
         user_login_toolbar = findViewById(R.id.user_login_toolbar);
         setSupportActionBar(user_login_toolbar);
-        ActionBar lvActionBar = getSupportActionBar();
-        lvActionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Local SQlite
 //        mUserDao = new UserDaoImp(this);
@@ -138,5 +138,11 @@ public class UserLoginActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -39,6 +39,12 @@ public class OrderListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_list);
 
+        //set toolbar
+        olst_toolbar = findViewById(R.id.olst_toolbar);
+        setSupportActionBar(olst_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         //check login states
         if (MncUtilities.currentUser == null) {
             MncUtilities.toastMessage(this, "Please log in first ! ");
@@ -110,14 +116,20 @@ public class OrderListActivity extends AppCompatActivity {
     }
 
 
+//    @Override
+//    public void onBackPressed() {
+////        if (MncUtilities.previousClass == null) {
+//            MncUtilities.startNextActivity(this, VehicleTypeActivity.class, false);
+////        } else {
+////            MncUtilities.startNextActivity(this, MncUtilities.previousClass, false);
+////        }
+////        super.onBackPressed();
+//    }
+
     @Override
-    public void onBackPressed() {
-//        if (MncUtilities.previousClass == null) {
-            MncUtilities.startNextActivity(this, VehicleTypeActivity.class, false);
-//        } else {
-//            MncUtilities.startNextActivity(this, MncUtilities.previousClass, false);
-//        }
-//        super.onBackPressed();
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

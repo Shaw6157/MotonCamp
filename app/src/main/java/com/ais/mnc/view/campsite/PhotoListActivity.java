@@ -36,8 +36,12 @@ public class PhotoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_list);
 
+        ptlt_toolbar = findViewById(R.id.ptlt_toolbar);
+        setSupportActionBar(ptlt_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         if (MncUtilities.currentPhotoList != null) {
-            ptlt_toolbar = findViewById(R.id.ptlt_toolbar);
             ptlt_toolbar.setTitle("Photo Gallery (" + MncUtilities.currentPhotoList.size() + ")");
 
             //set photo list
@@ -46,5 +50,11 @@ public class PhotoListActivity extends AppCompatActivity {
             recycle_plist.setHasFixedSize(true);
             recycle_plist.setAdapter(new PhotoListAdapter(this, MncUtilities.currentPhotoList));
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

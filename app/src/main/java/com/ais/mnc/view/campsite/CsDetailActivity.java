@@ -7,6 +7,7 @@ import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
@@ -53,6 +54,15 @@ public class CsDetailActivity extends AppCompatActivity {
         FacebookSdk.setApplicationId("281866435867452");
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         setContentView(R.layout.activity_campsite_detail);
+
+        //set toolbar
+        csdt_toolbar = findViewById(R.id.csdt_toolbar);
+        setSupportActionBar(csdt_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        ActionBar lvActionBar = getSupportActionBar();
+        lvActionBar.setDisplayHomeAsUpEnabled(true);
 
         mCurrentCpsite = MncUtilities.currentCpsite;
 
@@ -198,6 +208,12 @@ public class CsDetailActivity extends AppCompatActivity {
         PhotoBean searchBean = new PhotoBean();
         searchBean.setCid(mCurrentCpsite.getCid());
         new PhotoTask("findbycamp", this).execute(searchBean);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
 }

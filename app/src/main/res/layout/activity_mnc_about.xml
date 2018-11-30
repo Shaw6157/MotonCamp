@@ -109,6 +109,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="This is a trial version for non-commercial use. And Version 1.1 is an online version, using mySQL." />
+
+            <TextView
+                android:id="@+id/tv_copyright"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="icons come from flaticon.com design" />
         </LinearLayout>
     </ScrollView>
 

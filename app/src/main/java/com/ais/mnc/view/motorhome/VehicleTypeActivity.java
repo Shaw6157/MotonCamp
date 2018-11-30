@@ -1,10 +1,7 @@
 package com.ais.mnc.view.motorhome;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -41,8 +38,8 @@ public class VehicleTypeActivity extends AppCompatActivity {
         //set toolbar
         vtyp_toolbar = findViewById(R.id.vtyp_toolbar);
         setSupportActionBar(vtyp_toolbar);
-        ActionBar lvActionBar = getSupportActionBar();
-        lvActionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //get top deals for sliderview
         vlst_slider = findViewById(R.id.vtyp_slider);
@@ -93,7 +90,7 @@ public class VehicleTypeActivity extends AppCompatActivity {
 //        //CAN BE FROM DB, BUT DIDNOT
 //        lvVehicleDao = new VehicleDaoImp(this);
 //        vTypeList = lvVehicleDao.getAllTypes();
-        vTypeList = new ArrayList<VehicleBean> (5);
+        vTypeList = new ArrayList<VehicleBean>(5);
         VehicleBean vehicleType1 = new VehicleBean();
         vehicleType1.setVname("Sleeps 2");
         vehicleType1.setImage("https://www.gonewiththewynns.com/wp-content/uploads/2012/08/airstream_interstate_exterior1.jpg");
@@ -140,5 +137,11 @@ public class VehicleTypeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         MncUtilities.startNextActivity(VehicleTypeActivity.this, CsListActivity.class, false);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
