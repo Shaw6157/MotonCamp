@@ -14,5 +14,7 @@
     <string name="vdetail_tab2">Other</string>
     <string name="title_activity_campsite_map">Campsite Map</string>
 
+    <string name="facebook_app_id">281866435867452</string>
+    <string name="facebook_login_protocal_scheme">fb281866435867452</string>
 
 </resources>

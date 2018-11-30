@@ -28,6 +28,7 @@
         android:roundIcon="@mipmap/ic_launcher_mnc_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".view.system.SplashActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -38,8 +39,15 @@
         <activity android:name=".view.system.UserSignUpActivity" />
         <activity android:name=".view.campsite.CsListActivity">
         </activity>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
         <activity android:name=".view.campsite.CsDetailActivity">
         </activity>
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider281866435867452"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
         <activity android:name=".view.campsite.CsMapActivity" />
         <activity android:name=".view.campsite.PhotoListActivity">
         </activity>

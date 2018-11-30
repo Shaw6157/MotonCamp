@@ -47,10 +47,7 @@ public class VehicleCardAdapter extends RecyclerView.Adapter<VehicleCardViewHold
         currentVehicleType = vehicleList.get(i);
 
         //set image and text on card
-//        Picasso.with(mContext)
-//                .load(currentVehicleType.getImage())
-//                .into(vehicleCardViewHolder.vcard_img_item);
-        MncUtilities.setMncImage(mContext, currentVehicleType.getImage(), vehicleCardViewHolder.vcard_img_item);
+        MncUtilities.loadOnlineImage(mContext, currentVehicleType.getImage(), vehicleCardViewHolder.vcard_img_item);
         vehicleCardViewHolder.vcard_tv_desc.setText(currentVehicleType.getVname());
 
         //set event

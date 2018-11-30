@@ -51,16 +51,15 @@ public class OrderListActivity extends AppCompatActivity {
         ActionBar lvActionBar = getSupportActionBar();
         lvActionBar.setDisplayHomeAsUpEnabled(true);
 
-        //set container
-        recycle_olist = findViewById(R.id.recycle_olist);
-        recycle_olist.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
-        recycle_olist.setHasFixedSize(true);
-
-
-        //fetch order list
         //1. local version
+//        //set container
+//        recycle_olist = findViewById(R.id.recycle_olist);
+//        recycle_olist.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
+//        recycle_olist.setHasFixedSize(true);
+//        //fetch order list
 //        mOrderDao = new OrderDaoImp(this);
 //        orderList = mOrderDao.findByUID(MncUtilities.currentUser.getUid());
+
         //2. online version
         new OrderTask("findall", OrderListActivity.this).execute(new OrderBean());
 

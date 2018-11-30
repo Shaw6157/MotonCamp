@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -46,7 +47,6 @@ public class OrderTask extends AsyncTask<OrderBean, Void, String> {
     private Context mContext;
     private DialogInterface mDialog;
 
-    OrderBean[] mOrderBeans;        //get params from activity
     ArrayList<OrderBean> orderList; //deal with the result list
     RecyclerView recycle_olist;
 
@@ -68,7 +68,6 @@ public class OrderTask extends AsyncTask<OrderBean, Void, String> {
     @Override
     protected String doInBackground(OrderBean... orders) {
         StringBuilder sb = new StringBuilder("");
-        mOrderBeans = orders;
         try {
             URL url = new URL(ConfServer.SERVER_CONF + "function_order.php");
             URLConnection lvConnection = url.openConnection();
@@ -117,7 +116,7 @@ public class OrderTask extends AsyncTask<OrderBean, Void, String> {
             } else {
                 Log.d(TAG, "echo:  nothing return to stringbuilder");
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.d(TAG, "background error msg:" + e.getMessage());
             return "";
         }
@@ -138,32 +137,8 @@ public class OrderTask extends AsyncTask<OrderBean, Void, String> {
 
         switch (mAction) {
             case "findall":
-                orderList = new ArrayList<OrderBean>();
-                try {
-                    JSONArray array = new JSONArray(php_echo_str);
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject obj = array.getJSONObject(i);
-                        Log.d(TAG, obj.toString());
-
-                        OrderBean eachBean = new OrderBean();
-                        eachBean.setOid(obj.optInt(TableConstant.ORDER_COL1_OID));
-                        eachBean.setUid(obj.optInt(TableConstant.ORDER_COL2_VID));
-                        eachBean.setVid(obj.optInt(TableConstant.ORDER_COL3_UID));
-
-                        eachBean.setDatebg(obj.optString(TableConstant.ORDER_COL4_DATABG));
-                        eachBean.setDateed(obj.optString(TableConstant.ORDER_COL5_DATAED));
-
-                        eachBean.setAmount(obj.optInt(TableConstant.ORDER_COL6_AMOUNT));
-
-                        eachBean.setOdate(obj.optString(TableConstant.ORDER_COL7_DATA));
-                        eachBean.setOstate(obj.optString(TableConstant.ORDER_COL8_STATE));
-                        eachBean.setContactName(obj.optString(TableConstant.ORDER_COL9_CONTACT));
-                        eachBean.setContactPhone(obj.optString(TableConstant.ORDER_COL10_PHONE));
-                        orderList.add(eachBean);
-                    }
-                } catch (JSONException e) {
-                    Log.d(TAG, "postexe error msg:" + e.getMessage());
-                }
+            case "findbyuser":
+                orderList = changeJsonToList(php_echo_str);
 
                 if (orderList != null && orderList.size() > 0) {
                     //set adapter and list
@@ -214,6 +189,37 @@ public class OrderTask extends AsyncTask<OrderBean, Void, String> {
                 break;
         }
 
+    }
+
+    private ArrayList<OrderBean> changeJsonToList(String str_json) {
+        try {
+            ArrayList<OrderBean> list = new ArrayList<OrderBean>();
+            JSONArray array = new JSONArray(str_json);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject obj = array.getJSONObject(i);
+                Log.d(TAG, obj.toString());
+
+                OrderBean eachBean = new OrderBean();
+                eachBean.setOid(obj.optInt(TableConstant.ORDER_COL1_OID));
+                eachBean.setUid(obj.optInt(TableConstant.ORDER_COL2_VID));
+                eachBean.setVid(obj.optInt(TableConstant.ORDER_COL3_UID));
+
+                eachBean.setDatebg(obj.optString(TableConstant.ORDER_COL4_DATABG));
+                eachBean.setDateed(obj.optString(TableConstant.ORDER_COL5_DATAED));
+
+                eachBean.setAmount(obj.optInt(TableConstant.ORDER_COL6_AMOUNT));
+
+                eachBean.setOdate(obj.optString(TableConstant.ORDER_COL7_DATA));
+                eachBean.setOstate(obj.optString(TableConstant.ORDER_COL8_STATE));
+                eachBean.setContactName(obj.optString(TableConstant.ORDER_COL9_CONTACT));
+                eachBean.setContactPhone(obj.optString(TableConstant.ORDER_COL10_PHONE));
+                list.add(eachBean);
+            }
+            return list;
+        } catch (JSONException e) {
+            Log.d(TAG, "postexe error msg:" + e.getMessage());
+            return null;
+        }
     }
 
     private void filterList(List<OrderBean> olist, String status) {

@@ -11,6 +11,7 @@ import com.ais.mnc.R;
 import com.ais.mnc.db.bean.VehicleBean;
 import com.ais.mnc.db.dao.VehicleDao;
 import com.ais.mnc.db.daoimp.VehicleDaoImp;
+import com.ais.mnc.db.phpimp.VehicleTask;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.adapter.VehicleListAdapter;
 
@@ -30,19 +31,24 @@ public class VehicleListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle_list);
 
-        mVehicleDao = new VehicleDaoImp(this);
-        vehicleList = mVehicleDao.findByType(MncUtilities.currentVehicleType);
-
-        if (vehicleList != null) {
-            Log.d(TAG, "select result: " + vehicleList.size());
-
-            //set vehicle types adpter
-            recycle_vlst = findViewById(R.id.recycle_vlist);
-            recycle_vlst.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
-            recycle_vlst.setHasFixedSize(true);
-            recycle_vlst.setAdapter(new VehicleListAdapter(this, vehicleList));
-        } else {
-            MncUtilities.toastMessage(this, "no vehicle of this type!");
-        }
+        //1. local version
+//        mVehicleDao = new VehicleDaoImp(this);
+//        vehicleList = mVehicleDao.findByType(MncUtilities.currentVehicleType);
+//
+//        if (vehicleList != null) {
+//            Log.d(TAG, "select result: " + vehicleList.size());
+//
+//            //set vehicle types adpter
+//            recycle_vlst = findViewById(R.id.recycle_vlist);
+//            recycle_vlst.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL, false));
+//            recycle_vlst.setHasFixedSize(true);
+//            recycle_vlst.setAdapter(new VehicleListAdapter(this, vehicleList));
+//        } else {
+//            MncUtilities.toastMessage(this, "no vehicle of this type!");
+//        }
+        //2.online version
+        VehicleBean vehicletype = new VehicleBean();
+        vehicletype.setType(MncUtilities.currentVehicleType);
+        new VehicleTask("findbytype", this).execute(vehicletype);
     }
 }

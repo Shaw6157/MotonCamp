@@ -9,6 +9,21 @@
     android:background="@drawable/bg_green"
     tools:context=".view.campsite.PhotoListActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/ptlt_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Photo Gallery"
+            />
+    </android.support.design.widget.AppBarLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,16 +32,6 @@
         android:paddingRight="16dp"
         android:paddingTop="16dp"
         >
-
-        <TextView
-            android:id="@+id/plst_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Photo Gallery: "
-            android:layout_marginTop="4dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="left"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ptlt_recycle_view"

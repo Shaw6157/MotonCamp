@@ -3,11 +3,9 @@ package com.ais.mnc.view.motorhome;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +21,6 @@ import com.ais.mnc.db.bean.OrderBean;
 import com.ais.mnc.db.bean.VehicleBean;
 import com.ais.mnc.db.dao.OrderDao;
 import com.ais.mnc.db.dao.VehicleDao;
-import com.ais.mnc.db.daoimp.OrderDaoImp;
 import com.ais.mnc.db.phpimp.OrderTask;
 import com.ais.mnc.util.MncUtilities;
 import com.ais.mnc.view.system.UserLoginActivity;
@@ -176,7 +173,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
                 .inflate(R.layout.order_add_layout, null);
         initNewOrderDialog();
 
-        AlertDialog.Builder builder =  new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(orderView);
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -221,13 +218,13 @@ public class VehicleDetailActivity extends AppCompatActivity {
     private void initNewOrderDialog() {
         //set elements on the layout xml file
 
-        vlst_img        = orderView.findViewById(R.id.vlst_img);
-        vlst_tv_name    = orderView.findViewById(R.id.vlst_tv_name);
-        vlst_tv_amount  = orderView.findViewById(R.id.vlst_tv_amount);
-        vlst_tv_type    = orderView.findViewById(R.id.vlst_tv_type);
+        vlst_img = orderView.findViewById(R.id.vlst_img);
+        vlst_tv_name = orderView.findViewById(R.id.vlst_tv_name);
+        vlst_tv_amount = orderView.findViewById(R.id.vlst_tv_amount);
+        vlst_tv_type = orderView.findViewById(R.id.vlst_tv_type);
         vlst_tv_transmission = orderView.findViewById(R.id.vlst_tv_transmission);
-        vlst_tv_engine  = orderView.findViewById(R.id.vlst_tv_engine);
-        od_et_days      = orderView.findViewById(R.id.od_et_days);
+        vlst_tv_engine = orderView.findViewById(R.id.vlst_tv_engine);
+        od_et_days = orderView.findViewById(R.id.od_et_days);
 
         od_et_title = orderView.findViewById(R.id.od_et_title);
         od_et_fname = orderView.findViewById(R.id.od_et_fname);
@@ -251,7 +248,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
         setListener();
 
-        MncUtilities.setMncImage(this, MncUtilities.currentVehicle.getImage(), vlst_img);
+        MncUtilities.loadOnlineImage(this, MncUtilities.currentVehicle.getImage(), vlst_img);
         vlst_tv_name.setText("" + MncUtilities.currentVehicle.getVname());
         vlst_tv_amount.setText("$" + MncUtilities.currentVehicle.getPrice());
         vlst_tv_type.setText(" - " + MncUtilities.currentVehicle.getType() + " Berth");
@@ -263,7 +260,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setListener(){
+    private void setListener() {
         od_et_datebg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,7 +269,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         c_datebg.set(year, month, dayOfMonth);
-                        od_et_datebg.setText(dayOfMonth + "-" + (month + 1) +  "-" + year);
+                        od_et_datebg.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
                         calculateDays(c_datebg, c_dateed);
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
@@ -284,24 +281,24 @@ public class VehicleDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                DatePickerDialog dlg =  new DatePickerDialog(VehicleDetailActivity.this, null,
+                DatePickerDialog dlg = new DatePickerDialog(VehicleDetailActivity.this, null,
                         c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dlg.setOnDateSetListener(
                         new DatePickerDialog.OnDateSetListener() {
-                             @Override
-                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                 c_dateed.set(year, month, dayOfMonth);
-                                 od_et_dateed.setText(dayOfMonth + "-" + (month + 1) +  "-" + year);
-                                 calculateDays(c_datebg, c_dateed);
-                             }
-                         }
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                c_dateed.set(year, month, dayOfMonth);
+                                od_et_dateed.setText(dayOfMonth + "-" + (month + 1) + "-" + year);
+                                calculateDays(c_datebg, c_dateed);
+                            }
+                        }
                 );
                 dlg.show();
             }
         });
     }
 
-    private void calculateDays (Calendar c_bg, Calendar c_ed) {
+    private void calculateDays(Calendar c_bg, Calendar c_ed) {
         if (c_bg != null && c_ed != null) {
             long timebg = c_bg.getTimeInMillis();
             long timeed = c_ed.getTimeInMillis();

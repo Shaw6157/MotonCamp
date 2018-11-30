@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -64,10 +65,12 @@ public class UserTask extends AsyncTask<UserBean, Void, String> {
             URL url = new URL(ConfServer.SERVER_CONF + "function_user.php");
             URLConnection lvConnection = url.openConnection();
 
-            //$action_validation = ['createUser', 'getPassword', 'findByName', 'findAll', 'updateUser', 'deleteUser', 'checkExist'];
+            //$action_validation = ['createUser', 'getPassword', 'findByName', 'findAll', 'updateuser', 'deleteUser', 'checkExist'];
             if (!"findAll".equals(mAction)) {
                 String param = MncUtilities.encodeUTF8("action") + "="
                         + MncUtilities.encodeUTF8(mAction) + "&"
+                        + MncUtilities.encodeUTF8("uid") + "="
+                        + MncUtilities.encodeUTF8(users[0].getUid()) + "&"
                         + MncUtilities.encodeUTF8("uname") + "="
                         + MncUtilities.encodeUTF8(users[0].getUname()) + "&"
                         + MncUtilities.encodeUTF8("email") + "="
@@ -91,7 +94,7 @@ public class UserTask extends AsyncTask<UserBean, Void, String> {
                 sb.append(line);
             }
             Log.d(TAG, "echo:" + sb.toString());
-        } catch (Exception e) {
+        } catch (IOException e) {
             Log.d(TAG, "background error msg:" + e.getMessage());
             return "";
         }

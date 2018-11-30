@@ -2,18 +2,24 @@ package com.ais.mnc.view.campsite;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,14 +27,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ais.mnc.R;
-import com.ais.mnc.db.daoimp.CampsiteDaoImp;
+import com.ais.mnc.db.bean.CampBean;
+import com.ais.mnc.db.bean.OrderBean;
+import com.ais.mnc.db.bean.UserBean;
+import com.ais.mnc.db.phpimp.CampsiteTask;
+import com.ais.mnc.db.phpimp.UserTask;
 import com.ais.mnc.util.MncUtilities;
-import com.ais.mnc.view.adapter.CampsiteListAdapter;
 import com.ais.mnc.view.motorhome.OrderListActivity;
 import com.ais.mnc.view.motorhome.VehicleTypeActivity;
 import com.ais.mnc.view.system.AboutActivity;
 import com.ais.mnc.view.system.SplashActivity;
 import com.ais.mnc.view.system.UserLoginActivity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class CsListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,6 +49,11 @@ public class CsListActivity extends AppCompatActivity
     RecyclerView recycle_clist;
     TextView dwr_tv_uid, dwr_tv_email;
     ImageView dwr_img_head;
+
+    //for dialog
+    TextInputEditText user_txt_uname;
+    TextInputEditText user_txt_email;
+    TextInputEditText user_txt_email_new;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +74,7 @@ public class CsListActivity extends AppCompatActivity
 
         //set user info to drawer
         View headerView = navigationView.getHeaderView(0);
-        dwr_tv_uid   = headerView.findViewById(R.id.dwr_tv_uid);
+        dwr_tv_uid = headerView.findViewById(R.id.dwr_tv_uid);
         dwr_tv_email = headerView.findViewById(R.id.dwr_tv_email);
         dwr_img_head = headerView.findViewById(R.id.dwr_img_head);
 
@@ -65,7 +82,9 @@ public class CsListActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (MncUtilities.currentUser != null) {
-                    MncUtilities.toastMessage(CsListActivity.this, "already logged in!");
+//                    MncUtilities.toastMessage(CsListActivity.this, "already logged in!");
+                    showProfileDialog();
+
                 } else {
                     MncUtilities.startNextActivity(CsListActivity.this, UserLoginActivity.class, false);
                 }
@@ -84,14 +103,67 @@ public class CsListActivity extends AppCompatActivity
             }
         });
 
-        //set context campsite list
-        recycle_clist = findViewById(R.id.clst_lyt_recycle);
-        recycle_clist.setLayoutManager(new GridLayoutManager(this, 2));
-        recycle_clist.setHasFixedSize(true);
-        MncUtilities.currentCampList = new CampsiteDaoImp(this).findAll();
-        recycle_clist.setAdapter(
-                new CampsiteListAdapter(
-                        this, MncUtilities.currentCampList));
+        //1. local version
+//        //set context campsite list
+//        MncUtilities.currentCampList = new CampsiteDaoImp(this).findAll();
+//        recycle_clist = findViewById(R.id.clst_lyt_recycle);
+//        recycle_clist.setLayoutManager(new GridLayoutManager(this, 2));
+//        recycle_clist.setHasFixedSize(true);
+//        recycle_clist.setAdapter(
+//                new CampsiteListAdapter(
+//                        this, MncUtilities.currentCampList));
+        //2. online version
+        new CampsiteTask("findall", this).execute(new CampBean());
+
+
+        //facebook sharing
+        printKeyHash();
+    }
+
+    private void showProfileDialog() {
+        View profileView = LayoutInflater.from(this)
+                .inflate(R.layout.user_profile_layout, null);
+
+        user_txt_uname = profileView.findViewById(R.id.user_txt_uname);
+        user_txt_email = profileView.findViewById(R.id.user_txt_email);
+        user_txt_email_new = profileView.findViewById(R.id.user_txt_email_new);
+
+        user_txt_uname.setText(MncUtilities.currentUser.getUname());
+        user_txt_email.setText(MncUtilities.currentUser.getEmail());
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setView(profileView);
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UserBean updateUser = MncUtilities.currentUser;
+                updateUser.setEmail(user_txt_email_new.getText() + "");
+                new UserTask("updateuser", CsListActivity.this).execute(updateUser);
+            }
+        });
+        builder.show();
+    }
+
+    private void printKeyHash() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.ais.mnc",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash: ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (NoSuchAlgorithmException e2) {
+            e2.printStackTrace();
+        }
     }
 
     private void initDrawUser() {
@@ -177,7 +249,8 @@ public class CsListActivity extends AppCompatActivity
                 builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();;
+                        dialog.dismiss();
+                        ;
                     }
                 });
 
@@ -195,7 +268,7 @@ public class CsListActivity extends AppCompatActivity
             }
         }
 
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

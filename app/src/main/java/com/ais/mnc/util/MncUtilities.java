@@ -115,7 +115,7 @@ public class MncUtilities {
         }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
     }
 
-    public static void setMncImage(Context context, String str_img, ImageView vImg) {
+    public static void loadOnlineImage(Context context, String str_img, ImageView vImg) {
         Picasso.with(context)
                 .load(str_img)
                 .into(vImg);
@@ -143,6 +143,9 @@ public class MncUtilities {
     }
 
     public static String encodeUTF8(String str) {
+        if (str == null) {
+            return "";
+        }
         try {
             return URLEncoder.encode(str, ConfServer.SERVER_ENC);
         } catch (UnsupportedEncodingException e) {
@@ -154,6 +157,15 @@ public class MncUtilities {
     public static String encodeUTF8(int int_str) {
         try {
             return URLEncoder.encode(String.valueOf(int_str), ConfServer.SERVER_ENC);
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "encoding error:" + e.getMessage());
+        }
+        return "er";
+    }
+
+    public static String encodeUTF8(double double_str) {
+        try {
+            return URLEncoder.encode(String.valueOf(double_str), ConfServer.SERVER_ENC);
         } catch (UnsupportedEncodingException e) {
             Log.d(TAG, "encoding error:" + e.getMessage());
         }

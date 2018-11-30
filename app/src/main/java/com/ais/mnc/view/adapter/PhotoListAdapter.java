@@ -59,7 +59,7 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.Phot
     @Override
     public void onBindViewHolder(@NonNull PhotoViewHolder photoViewHolder, final int i) {
 //        Glide.with(context).load(mPhotoList.get(i).getTPath()).thumbnail(1f).into(photoViewHolder.image);
-        MncUtilities.setMncImage(context, mPhotoList.get(i).getOPath(), photoViewHolder.image);
+        MncUtilities.loadOnlineImage(context, mPhotoList.get(i).getOPath(), photoViewHolder.image);
 
         photoViewHolder.setItemClickListener(new IItemClickListener() {
             @Override

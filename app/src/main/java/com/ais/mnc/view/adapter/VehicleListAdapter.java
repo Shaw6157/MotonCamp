@@ -45,10 +45,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListViewHold
     public void onBindViewHolder(@NonNull VehicleListViewHolder holder, final int i) {
         currentVehicle = vehicleList.get(i);
 
-//        Picasso.with(mContext)
-//                .load(currentVehicle.getImage())
-//                .into(holder.vlst_img);
-        MncUtilities.setMncImage(mContext, currentVehicle.getImage(), holder.vlst_img);
+        MncUtilities.loadOnlineImage(mContext, currentVehicle.getImage(), holder.vlst_img);
         holder.vlst_tv_name.setText(currentVehicle.getVname());
         holder.vlst_tv_type.setText(currentVehicle.getType() + " Berth");
         holder.vlst_tv_transm.setText(currentVehicle.getTransmission());

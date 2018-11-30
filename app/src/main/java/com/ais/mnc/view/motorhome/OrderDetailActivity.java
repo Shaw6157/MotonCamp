@@ -63,7 +63,7 @@ public class OrderDetailActivity extends AppCompatActivity {
             }
         });
 
-        MncUtilities.setMncImage(this, MncUtilities.currentVehicle.getImage(), vlst_img);
+        MncUtilities.loadOnlineImage(this, MncUtilities.currentVehicle.getImage(), vlst_img);
         vlst_tv_name.setText("" + MncUtilities.currentVehicle.getVname());
         vlst_tv_amount.setText("$" + MncUtilities.currentVehicle.getPrice());
         vlst_tv_type.setText(" - " + MncUtilities.currentVehicle.getType() + " Berth");

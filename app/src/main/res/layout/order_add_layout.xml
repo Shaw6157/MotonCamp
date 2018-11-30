@@ -227,10 +227,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:background="@color/WHITE"
-            android:inputType="text"
             android:hint="Phone number"
-            android:textSize="14sp"
-            />
+            android:inputType="number"
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/od_check"

@@ -57,7 +57,7 @@ public class TableConstant {
     public static final String PHOTO_COL2_CID   = "CampsiteID";
     public static final String PHOTO_COL3_UID   = "UserID";
     public static final String PHOTO_COL4_DATE  = "PhotoDate";
-    public static final String PHOTO_COL5_PATH  = "Path";
+    public static final String PHOTO_COL5_PATH  = "PhotoPath";
     public static final String PHOTO_COL6_DESC  = "PhotoDesc";
     public static final String PHOTO_COL7_DEL   = "DelFlag";
 

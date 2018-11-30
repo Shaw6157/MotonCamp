@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ public class PhotoListActivity extends AppCompatActivity {
     private static final String TAG = "PhotoListActivity >>> ";
 
     RecyclerView recycle_plist;
-    TextView plst_title;
+    Toolbar ptlt_toolbar;
 
     List<MultiplexImage> photoList;
     PhotoListAdapter adapter;
@@ -36,8 +37,8 @@ public class PhotoListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo_list);
 
         if (MncUtilities.currentPhotoList != null) {
-            plst_title = findViewById(R.id.plst_title);
-            plst_title.setText("Photo Gallery (" + MncUtilities.currentPhotoList.size() + ")");
+            ptlt_toolbar = findViewById(R.id.ptlt_toolbar);
+            ptlt_toolbar.setTitle("Photo Gallery (" + MncUtilities.currentPhotoList.size() + ")");
 
             //set photo list
             recycle_plist = findViewById(R.id.ptlt_recycle_view);

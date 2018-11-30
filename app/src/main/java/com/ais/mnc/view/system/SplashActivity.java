@@ -2,6 +2,7 @@ package com.ais.mnc.view.system;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -41,7 +42,8 @@ public class SplashActivity extends AppCompatActivity {
 //        thread.start();
 
 
-        initCampsites();
+        //1. local version
+//        initCampsites();
 
         initSplashAnimation();
     }
@@ -59,6 +61,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 MncUtilities.startNextActivity(SplashActivity.this, CsListActivity.class, true);
+                Log.d("test >>>", "end jumping");
             }
 
             @Override
